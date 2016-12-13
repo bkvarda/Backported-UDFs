@@ -1,4 +1,4 @@
-Back-ported the following Hive UDFs from Hive 1.3 to Hive 0.14 (currently bundled with HDP 2.3.x)
+Back-ported the following Hive UDFs from Hive 1.3 to Hive 1.1 (currently bundled with CDH 5.x)
 
 ===============================================
 
@@ -23,17 +23,17 @@ binary	aes_decrypt(input binary, key string/binary)	Decrypt input using AES (as 
 
 Commands to use
 
-[davidk@bd01vox110 ~]$ hdfs dfs -put Backported-UDFs-0.0.1.jar
+[ec2-user@ip-10-0-0-5 ~]$ hdfs dfs -put Backported-UDFs-0.0.1.jar
  
 hive> add jar Backported-UDFs-0.0.1.jar;
-hive> CREATE function sha1 AS 'org.apache.hadoop.hive.ql.udf.UDFSha1' USING JAR 'hdfs:///user/davidk/Backported-UDFs-0.0.1.jar';
+hive> CREATE function sha1 AS 'org.apache.hadoop.hive.ql.udf.UDFSha1' USING JAR 'hdfs:///user/ec2-user/Backported-UDFs-0.0.1.jar';
 hive> select sha1('ABC');
  
-hive> CREATE function aes_encrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesEncrypt' USING JAR 'hdfs:///user/davidk/Backported-UDFs-0.0.1.jar';
+hive> CREATE function aes_encrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesEncrypt' USING JAR 'hdfs:///user/ec2-user/Backported-UDFs-0.0.1.jar';
 hive> select base64(aes_encrypt('ABC', '1234567890123456'));
  
-hive> CREATE function aes_decrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesDecrypt' USING JAR 'hdfs:///user/davidk/Backported-UDFs-0.0.1.jar';
+hive> CREATE function aes_decrypt AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFAesDecrypt' USING JAR 'hdfs:///user/ec2-user/Backported-UDFs-0.0.1.jar';
 hive> select aes_decrypt(unbase64('y6Ss+zCYObpCbgfWfyNWTw=='), '1234567890123456');
  
-hive> CREATE function sha2 AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFSha2' USING JAR 'hdfs:///user/davidk/Backported-UDFs-0.0.1.jar';
+hive> CREATE function sha2 AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFSha2' USING JAR 'hdfs:///user/ec2-user/Backported-UDFs-0.0.1.jar';
 hive> select sha2('ABC', 256);
